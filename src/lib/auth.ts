@@ -6,11 +6,11 @@ import GoogleProvider from 'next-auth/providers/google'
 function getGoogleCredentials(): { clientId: string; clientSecret: string } {
     const clientId = process.env.GOOGLE_CLIENT_ID
     const clientSecret = process.env.GOOGLE_CLIENT_SECRET
-    if (!clientId || clientId.length === 0) {
+    if (!clientId ||( clientId.length === 0)) {
         throw new Error('Missing GOOGLE_CLIENT_ID')
     }
 
-    if (!clientSecret || clientSecret.length === 0) {
+    if (!clientSecret || (clientSecret.length === 0)) {
         throw new Error('Missing GOOGLE_CLIENT_SECRET')
     }
     return { clientId, clientSecret }
@@ -26,8 +26,10 @@ export const authOptions: NextAuthOptions = {
     },
     providers: [
         GoogleProvider({
-            clientId: getGoogleCredentials().clientId,
-            clientSecret: getGoogleCredentials().clientSecret,
+            // clientId: getGoogleCredentials().clientId,
+            // clientSecret: getGoogleCredentials().clientSecret,
+            clientId:   process.env.GOOGLE_CLIENT_ID,
+            clientSecret:  process.env.GOOGLE_CLIENT_SECRET,
         }),
     ],
     callbacks: {
@@ -51,7 +53,6 @@ export const authOptions: NextAuthOptions = {
                 token.id = user!.id
                 return token
             }
-
             return {
                 id: dbUser.id,
                 name: dbUser.name,
@@ -59,8 +60,9 @@ export const authOptions: NextAuthOptions = {
                 picture: dbUser.image,
             }
         },
-       async redirect() {
+        redirect(){
             return '/dashboard'
-        },
+        }
+
     },
 }

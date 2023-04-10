@@ -5,11 +5,13 @@ import {Toaster} from "@/ui/Toast";
 import Navbar from "@/components/Navbar";
 
 export default function App({ Component, pageProps }: AppProps) {
-  return<Providers>
-      <Toaster position="bottom-left"/>
-      <Navbar/>
-      <div style={{marginTop:"6rem"}}>
-          <Component {...pageProps} />
-      </div>
-  </Providers>
+  return<>
+      <Providers>
+          <Toaster position="bottom-left"/>
+          <Navbar/>
+          <div style={{marginTop:"6rem"}}>
+              <Component {...pageProps} />
+          </div>
+      </Providers>
+  </>
 }
